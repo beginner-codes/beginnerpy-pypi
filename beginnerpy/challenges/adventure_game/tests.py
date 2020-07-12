@@ -1,79 +1,44 @@
-from beginnerpy.challenges.adventure_game.solution import find_the_holy_grail
 from beginnerpy.challenges.adventure_game.game_builder import generate_game
-import unittest
+from beginnerpy.challenges.testing.test_case import TestCases
 
 
-def run_tests():
-    unittest.main(module=__name__)
-
-
-class TestFindTheHolyGrail(unittest.TestCase):
-    def test_1(self):
+class Tests(TestCases):
+    def test_1(self, solution):
         player, grail = generate_game(1)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_2(self):
+    def test_2(self, solution):
         player, grail = generate_game(2)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_3(self):
+    def test_3(self, solution):
         player, grail = generate_game(3)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_4(self):
+    def test_4(self, solution):
         player, grail = generate_game(4)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_5(self):
+    def test_5(self, solution):
         player, grail = generate_game(5)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_6(self):
+    def test_6(self, solution):
         player, grail = generate_game(6)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_7(self):
+    def test_7(self, solution):
         player, grail = generate_game(7)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_8(self):
+    def test_8(self, solution):
         player, grail = generate_game(8)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_9(self):
+    def test_9(self, solution):
         player, grail = generate_game(9)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
 
-    def test_10(self):
+    def test_10(self, solution):
         player, grail = generate_game(10)
-        self.assertIs(
-            grail,
-            find_the_holy_grail(player)
-        )
+        assert grail == solution(player)
