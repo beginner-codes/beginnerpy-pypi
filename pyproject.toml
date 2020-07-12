@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "BeginnerPy"
-version = "0.1.2"
+version = "2020.2.1"
 description = ""
 authors = ["Zech Zimmerman <hi@beginnerpy.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7.4"
-toml = "^0.10.1"
 colorama = "^0.4.3"
+toml = "^0.10.1"
 
 [tool.poetry.dev-dependencies]
 
