@@ -3,3 +3,4 @@
 .venv
 dist
 beginnerpy.egg-info
+__pycache__
