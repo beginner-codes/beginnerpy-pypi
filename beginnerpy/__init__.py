@@ -11,14 +11,29 @@ colorama.init()
 
 
 def _get_expected_version() -> Optional[str]:
-    resp = urllib.request.urlopen("https://beginnerpy.com/challenges/pip-version", timeout=1)
-    data = json.loads(resp.read())
+    try:
+        resp = urllib.request.urlopen("https://beginnerpy.com/challenges/pip-version", timeout=1)
+        data = json.loads(resp.read())
+    except Exception as e:
+        print("THERE WAS AN ERROR CHECKING THE EXPECTED VERSION", e)
+        return
     return data.get("version") if isinstance(data, dict) else None
 
 
-def _check_versions(expected_version: str):
-    pyproject = toml.load(pathlib.Path(__file__).parent.parent / "pyproject.toml")
-    current_version = pyproject.get("tool", {}).get("poetry", {}).get("version")
+def _get_current_version() -> Optional[str]:
+    pyproject_path = pathlib.Path(__file__).parent.parent / "pyproject.toml"
+    if not pyproject_path.exists():
+        print("COULDN'T FIND PYPROJECT.TOML")
+        return
+    try:
+        pyproject = toml.load(pyproject_path)
+    except Exception as e:
+        print("COULD'T READ PYPROJECT.TOML", e)
+        return
+    return pyproject.get("tool", {}).get("poetry", {}).get("version")
+
+
+def _check_versions(expected_version: Optional[str], current_version: Optional[str]):
     message = ""
     if not current_version:
         message = (
@@ -49,4 +64,4 @@ def _check_versions(expected_version: str):
         print(colorama.Style.RESET_ALL, flush=True)
 
 
-_check_versions(_get_expected_version())
+_check_versions(_get_expected_version(), _get_current_version())
