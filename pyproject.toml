@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "BeginnerPy"
-version = "2020.2.1"
+version = "2020.2.3"
 description = ""
 authors = ["Zech Zimmerman <hi@beginnerpy.com>"]
 
