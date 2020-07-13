@@ -5,7 +5,7 @@ import abc
 
 class Entity(abc.ABC):
     @abc.abstractmethod
-    def apply_item(self, item: Item) -> bool:
+    def _apply_item(self, item: Item) -> bool:
         """ Takes an item and returns True if it was applied to the object. """
         return False
 
@@ -17,17 +17,19 @@ class Player:
 
     @property
     def bag(self) -> Tuple[Item]:
+        """ The items in the player's bag. """
         return tuple(self.__bag)
 
     @property
     def room(self) -> Room:
+        """ The room the player is currently in. """
         return self.__room
 
     def drop(self, item: Item) -> bool:
         """ Attempt to drop an item from the bag, returns True if it was dropped. """
         if item in self.bag:
             self.__bag.remove(item)
-            self.room.add_item(item)
+            self.room._add_item(item)
             return True
         return False
 
@@ -36,7 +38,7 @@ class Player:
         if item not in self.__bag:
             raise Exception(f"{item} is not in your bag")
 
-        if entity.apply_item(item):
+        if entity._apply_item(item):
             self.__bag.remove(item)
             return True
 
@@ -66,7 +68,7 @@ class Player:
         if len(self.bag) >= 5:
             return False
 
-        if self.__room.take(item):
+        if self.__room._take(item):
             self.__bag.append(item)
             return True
 
@@ -83,10 +85,12 @@ class Item:
 
     @property
     def name(self) -> str:
+        """ Name of the item. """
         return self.__name
 
     @property
     def item_type(self) -> str:
+        """ The item's internal type. """
         return self.__item_type
 
     def __repr__(self) -> str:
@@ -101,10 +105,12 @@ class Door(Entity):
 
     @property
     def key(self) -> str:
+        """ The item type that is necessary to unlock the door. """
         return self.__key
 
     @property
     def locked(self) -> bool:
+        """ Whether the door is locked or not. """
         return self.__locked
 
     @property
@@ -112,7 +118,7 @@ class Door(Entity):
         """ Get the room that the door goes to """
         return self.__to
 
-    def apply_item(self, item: Item) -> bool:
+    def _apply_item(self, item: Item) -> bool:
         """ If the item type matches the door's key item type unlock the door and consume the key by returning True. """
         if self.locked:
             self.__locked = item.item_type != self.__key
@@ -129,30 +135,33 @@ class Room:
         self.__depth = depth
 
         if entry:
-            self.connect_room(entry, None)
+            self._connect_room(entry, None)
 
     @property
     def items(self) -> Tuple[Item]:
+        """ All items in the room. """
         return tuple(self.__items)
 
     @property
-    def depth(self) -> int:
+    def depth(self) -> Tuple[Door]:
+        """ How close the room is to the maximum number of rooms for a pathway. """
         return self.__depth
 
     @property
     def doors(self) -> Tuple[Door]:
+        """ All doors that are in the room. """
         return tuple(self.__doors)
 
-    def add_item(self, item: Item):
+    def _add_item(self, item: Item):
         self.__items.append(item)
 
-    def take(self, item: Item) -> bool:
+    def _take(self, item: Item) -> bool:
         if item in self.__items:
             self.__items.remove(item)
             return True
         return False
 
-    def connect_room(self, room: Room, key: Optional[Item]):
+    def _connect_room(self, room: Room, key: Optional[Item]):
         self.__doors.append(Door(room, key))
 
     def __repr__(self) -> str:

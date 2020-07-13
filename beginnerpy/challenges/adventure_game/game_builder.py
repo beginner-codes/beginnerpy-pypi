@@ -33,7 +33,7 @@ def generate_room(depth: int, entry_room: Optional[Room]) -> Room:
             key = random.choice(keys + [None])
             if key in keys:
                 keys.remove(key)
-            room.connect_room(new_room, key)
+            room._connect_room(new_room, key)
 
     return room
 
@@ -41,7 +41,7 @@ def generate_room(depth: int, entry_room: Optional[Room]) -> Room:
 def add_holy_grail(room: Room) -> Item:
     if room.depth == 0:
         grail = Item("Holy Grail", "holy_grail")
-        room.connect_room(Room(room, [grail], -1), None)
+        room._connect_room(Room(room, [grail], -1), None)
         return grail
 
     return add_holy_grail(random.choice(room.doors).to)
