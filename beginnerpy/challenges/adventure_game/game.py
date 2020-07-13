@@ -143,7 +143,7 @@ class Room:
         return tuple(self.__items)
 
     @property
-    def depth(self) -> Tuple[Door]:
+    def depth(self) -> int:
         """ How close the room is to the maximum number of rooms for a pathway. """
         return self.__depth
 
